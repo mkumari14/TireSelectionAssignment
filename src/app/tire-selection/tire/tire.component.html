@@ -61,7 +61,7 @@
         <mat-grid-list cols="6" *ngIf="modelsData$" rowHeight="50px">
 
           <mat-grid-tile *ngFor="let item of modelsData$ | async" >
-            <button mat-button color="primary" (click)="onTabChange('model', item, 'trim')">
+            <button mat-button color="primary" (click)="onTabChange('model', item, 'style')">
               {{ item }}
             </button>
           </mat-grid-tile>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TireService } from '../tire.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TireStore } from '../tire.store';
 @Component({
   selector: 'app-tire',
   templateUrl: './tire.component.html',
@@ -22,12 +22,12 @@ export class TireComponent implements OnInit {
    selectedMake= '';
    selectedModel='';
    selectedStyle='';
-  constructor(private tireService: TireService, public dialogRef: MatDialogRef<TireComponent>) { }
+  constructor(private tireStore:TireStore,
+     public dialogRef: MatDialogRef<TireComponent>) { }
 
   getVehiclesData() {
     this.buttonclicked=true;
-    this.yearsData$=this.tireService.getData("year");
-    console.log("years======>", this.yearsData$)
+    this.yearsData$=this.tireStore.grtYears();
   }
   ngOnInit() {
     }
@@ -39,9 +39,9 @@ export class TireComponent implements OnInit {
         this.yearTab=false;
         this.modelTab=false;
         this.styleTab=false
-        this.makesData$=this.tireService.getData(reqestingDataVal);
+        this.makesData$=this.tireStore.getMakes();
         this.selectInstruction=reqestingDataVal
-        console.log("makes======>", this.makesData$)
+        // console.log("makes======>", this.makesData$)
         break;
       case 'make':
         this.selectedMake=selectedVal;
@@ -49,8 +49,8 @@ export class TireComponent implements OnInit {
         this.yearTab=false;
         this.modelTab=true;
         this.styleTab=false
-       this.modelsData$= this.tireService.getData(reqestingDataVal)
-        console.log("models======>", this.modelsData$);
+        this.modelsData$= this.tireStore.getModels();
+      //   console.log("models======>", this.modelsData$);
         this.selectInstruction=reqestingDataVal
         break;
       case 'model':
@@ -59,8 +59,8 @@ export class TireComponent implements OnInit {
         this.yearTab=false;
         this.modelTab=false;
         this.styleTab=true;
-       this.stylesData$= this.tireService.getData(reqestingDataVal);
-        console.log("styles======>", this.stylesData$)
+        this.stylesData$= this.tireStore.getTrims();
+      //   console.log("styles======>", this.stylesData$)
         this.selectInstruction=reqestingDataVal
         break;
       case 'style':

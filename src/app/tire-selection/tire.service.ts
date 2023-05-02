@@ -9,7 +9,7 @@ export class TireService {
 
   constructor(private http: HttpClient) {}
   BASE_URL = `https://6080be3273292b0017cdbf2a.mockapi.io`
-getData(urlInput:any):Observable<[]>{
+  getData(urlInput:any):Observable<[]>{
   console.log("userInput", urlInput)
   return this.http.get(`${this.BASE_URL}/${urlInput ==='trim'? 'trim' : (urlInput+'s')}`).pipe(
     map((res: { [x: string]: any; })=>res[urlInput])
