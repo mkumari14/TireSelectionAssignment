@@ -1,0 +1,92 @@
+<div class="container">
+  <section >
+    <div class="buttonContainer">
+      <button type="button" mat-raised-button (click)="startOver()">
+        Start Over
+      </button>
+      <button type="button" mat-raised-button (click)="dialogRef.close()">
+        Close
+      </button>
+    </div>
+    <div class="headingTitleText">
+      Shop Tires
+    </div>
+  </section>
+
+  <section>
+    <div class="buttonContainer" [ngStyle]="{ display: buttonclicked == true ? 'none' : 'flex' }" >
+      <button mat-stroked-button color="primary" (click)="getVehiclesData()">
+        Vehicle
+      </button>
+      <button mat-stroked-button color="primary">Size</button>
+    </div>
+    <div class="bodyTitleText" *ngIf="buttonclicked">
+      Select {{selectInstruction ? selectInstruction : 'year'}}
+    </div>
+    <div class="bodyTitleText">
+      <span *ngIf="selectedYear">Year : {{ selectedYear }} ,  </span>
+      <span *ngIf="selectedMake">Make : {{ selectedMake }} ,  </span>
+      <span *ngIf="selectedModel">Model : {{ selectedModel }} ,  </span>
+      <span *ngIf="selectedStyle">Style : {{ selectedStyle }}</span>
+    </div>
+  </section>
+
+  <section >
+    <mat-tab-group #tabGroup *ngIf="buttonclicked">
+      <mat-tab label="Year" #tab [disabled]="!yearTab">
+        <div class="tabDataContainer" *ngIf="yearsData$">
+        <mat-grid-list cols="6" *ngIf="yearsData$" rowHeight="50px">
+          <mat-grid-tile *ngFor="let year of yearsData$ | async" >
+            <button mat-button color="primary" (click)="onTabChange('year', year, 'make')">
+              {{ year }}
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+      </mat-tab>
+
+      <mat-tab label="Make" #tab [disabled]="!makeTab">
+        <div class="tabDataContainer" *ngIf="yearsData$">
+        <mat-grid-list cols="6" *ngIf="makesData$" rowHeight="50px">
+          <mat-grid-tile *ngFor="let item of makesData$ | async" >
+            <button mat-button color="primary" (click)="onTabChange('make', item, 'model')">
+              {{ item }}
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+      </mat-tab>
+      <mat-tab label="Model" #tab [disabled]="!modelTab">
+        <div class="tabDataContainer" *ngIf="yearsData$">
+        <mat-grid-list cols="6" *ngIf="modelsData$" rowHeight="50px">
+
+          <mat-grid-tile *ngFor="let item of modelsData$ | async" >
+            <button mat-button color="primary" (click)="onTabChange('model', item, 'trim')">
+              {{ item }}
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+      </mat-tab>
+      <mat-tab label="Style" #tab [disabled]="!styleTab">
+        <div class="tabDataContainer" *ngIf="yearsData$">
+        <mat-grid-list cols="6" *ngIf="stylesData$" rowHeight="50px">
+          <mat-grid-tile *ngFor="let item of stylesData$ | async" >
+            <button mat-button color="primary" (click)="onTabChange('style', item,'')">
+              {{ item }}
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+</div>
+
+<!-- <ul *ngIf="yearsData$">
+  <l *ngFor="let year of yearsData$ | async">
+    <button (click)="onTabChange('year', year)">
+      {{ year }}
+    </button>
+  </li>
+</ul> -->
